@@ -2,7 +2,7 @@ name: Playwright Tests with Allure Reporting
 
 on:
   push:
-    branches: [ "develop" ] # Run on pushes to the "main" branch
+    branches: [ "main" ] # Run on pushes to the "main" branch
   pull_request:
     branches: [ "main" ] # Run on pull requests to the "main" branch
 
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Specify the desired Node.js version
+          node-version: '22.x' # Specify the desired Node.js version
 
       - name: Install dependencies
         run: npm install
@@ -34,7 +34,7 @@ jobs:
         env:
           CI: true
           PLAYWRIGHT_HEADLESS: true
-          DEBUG: pw:api
+          
         continue-on-error: true
           # Optionally, upload artifacts (e.g., screenshots, logs)
           # if you have any
@@ -49,7 +49,7 @@ jobs:
           dir /a
           dir /a/automation
           dir /a/automation/automation
-          dir /a/automation/automation/node_modules
+          
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v3
