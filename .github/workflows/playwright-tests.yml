@@ -1,0 +1,69 @@
+name: Playwright Tests with Allure Reporting
+
+on:
+  push:
+    branches: [ "develop" ] # Run on pushes to the "main" branch
+  pull_request:
+    branches: [ "main" ] # Run on pull requests to the "main" branch
+
+jobs:
+  run-tests:
+    runs-on: windows-latest # Choose a runner (e.g., ubuntu-latest, windows-latest, macOS-latest)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Specify the desired Node.js version
+
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Install rimraf
+        run: npm install -g rimraf
+      
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run tests and generate Allure reports
+        run: |
+          npm run test
+        env:
+          CI: true
+          PLAYWRIGHT_HEADLESS: true
+          DEBUG: pw:api
+        continue-on-error: true
+          # Optionally, upload artifacts (e.g., screenshots, logs)
+          # if you have any
+
+      - name: Print working directory
+        run: |
+          pwd
+      
+      - name: List Directory Contents
+        run: |
+          echo "Listing directory contents:"
+          dir /a
+          dir /a/automation
+          dir /a/automation/automation
+          dir /a/automation/automation/node_modules
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Generate Allure report
+        uses: actions/checkout@v3
+        with:
+          repository: SapphireDeals/automation
+          path: .github/actions/github-allure-reporter
+
+      - name: Publish Allure report
+        uses: ./.github/actions/github-allure-reporter
+        with:
+          allure_results_path: ./allure-results

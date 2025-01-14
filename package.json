@@ -1,0 +1,40 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:clean": "rimraf allure-results",
+    "test:cucumber": "npx cucumber-js -c ./config/cucumber_options.js",
+    "test:allure": "npm run test:clean && npm run test:cucumber && allure generate allure-results -o allure-report --clean", 
+    "test": "npm run test:allure"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SapphireDeals/automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SapphireDeals/automation/issues"
+  },
+  "homepage": "https://github.com/SapphireDeals/automation#readme",
+  "dependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/register": "^7.25.9",
+    "@cucumber/cucumber": "^11.1.1",
+    "cucumber": "^6.0.7",
+    "dotenv": "^16.4.7",
+    "playwright-core": "^1.49.1",
+    "@cucumber/pretty-formatter": "^1.0.1",
+    "@playwright/test": "^1.49.1",
+    "allure-commandline": "^2.32.0",
+    "allure-cucumberjs": "^3.0.8",
+    "playwright": "^1.49.1"
+  },
+  "devDependencies": {
+    
+  }
+}
