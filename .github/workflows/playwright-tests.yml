@@ -47,9 +47,9 @@ jobs:
         run: |
           echo "Listing directory contents:"
           dir /a
-          dir /a/automation
-          dir /a/automation/automation
-          
+          dir /a/PlaywrightTesting
+          dir /a/PlaywrightTesting/PlaywrightTesting
+
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v3
